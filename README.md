@@ -40,6 +40,8 @@ Traditional Chinese
 ```
 User must modify the file **/switch/switch-ftp-client/config.ini** and update the **language** setting to with the **exact** values from the list above.
 
+Contibutions for more languages are welcome.
+
 ## Credits
 Thx to the author of the imgui_decko3d_example which I used as a base to create this app.
 https://github.com/scturtle/imgui_deko3d_example
