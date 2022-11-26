@@ -1,0 +1,9 @@
+/home/cyee/projects/switch-ftp-client/build/CMakeFiles/rebuild_cache.dir
+/home/cyee/projects/switch-ftp-client/build/CMakeFiles/edit_cache.dir
+/home/cyee/projects/switch-ftp-client/build/CMakeFiles/switch-ftp-client_nro.dir
+/home/cyee/projects/switch-ftp-client/build/CMakeFiles/imgui_fsh_install_to_switch-ftp-client_romfs.dir
+/home/cyee/projects/switch-ftp-client/build/CMakeFiles/imgui_vsh_install_to_switch-ftp-client_romfs.dir
+/home/cyee/projects/switch-ftp-client/build/CMakeFiles/switch-ftp-client_romfs.dir
+/home/cyee/projects/switch-ftp-client/build/CMakeFiles/imgui_vsh.dir
+/home/cyee/projects/switch-ftp-client/build/CMakeFiles/imgui_fsh.dir
+/home/cyee/projects/switch-ftp-client/build/CMakeFiles/switch-ftp-client.dir
