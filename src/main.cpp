@@ -106,7 +106,7 @@ namespace Services
     {
       fontType = DECKO_FONT_TYPE_KOREAN;
     }
-    else if (strcasecmp(language, "Japanese") == 0)
+    else if (strcasecmp(language, "Japanese") == 0 || strcasecmp(language, "Ryukyuan") == 0)
     {
       fontType = DECKO_FONT_TYPE_JAPANESE;
     }
