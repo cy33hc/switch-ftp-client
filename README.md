@@ -4,6 +4,9 @@ Simple FTP client for the switch
 
 ![Preview](/screenshot.jpg)
 
+## Installation
+Copy the **switch-ftp-client.nro** in to the **/switch/switch-ftp-client** into the SD card and then install the **switch-ftp-client.nsp**
+
 ## Controls
 ```
 X - Menu (after a file is selected)
