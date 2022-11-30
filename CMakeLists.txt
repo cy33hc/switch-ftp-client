@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.16.3)
 # or use: /opt/devkitpro/portlibs/switch/bin/aarch64-none-elf-cmake
 include(/opt/devkitpro/cmake/Switch.cmake)
-project(switch-ftp-client VERSION 1.0.0 LANGUAGES C CXX)
+project(switch-ftp-client VERSION 1.0.1 LANGUAGES C CXX)
 set(TITLE_NAME "Switch FTP Client")
 set(PROJECT_AUTHOR "cy33hc")
 
