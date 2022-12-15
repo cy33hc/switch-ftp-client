@@ -1228,7 +1228,8 @@ int FtpClient::Pwd(char *path, int max)
 int FtpClient::Size(const char *path, int64_t *size, transfermode mode)
 {
 	char cmd[512];
-	int resp, sz, rv = 1;
+	int resp, rv = 1;
+	int64_t sz;
 
 	if ((strlen(path) + 7) > sizeof(cmd))
 		return 0;
@@ -1242,7 +1243,7 @@ int FtpClient::Size(const char *path, int64_t *size, transfermode mode)
 		rv = 0;
 	else
 	{
-		if (sscanf(mp_ftphandle->response, "%d %d", &resp, &sz) == 2)
+		if (sscanf(mp_ftphandle->response, "%d %ld", &resp, &sz) == 2)
 			*size = sz;
 		else
 			rv = 0;
@@ -1686,7 +1687,7 @@ std::vector<FsEntry> FtpClient::ListDir(const char *path)
 					}
 					else if (entry.file_size < 1024 * 1024 * 1024)
 					{
-						sprintf(entry.display_size, "%.2f%MB", entry.file_size * 1.0f / (1024 * 1024));
+						sprintf(entry.display_size, "%.2fMB", entry.file_size * 1.0f / (1024 * 1024));
 					}
 					else
 					{

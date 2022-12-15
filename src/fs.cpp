@@ -75,7 +75,6 @@ namespace FS
 
     void Rename(const std::string &from, const std::string &to)
     {
-        remove(to.c_str());
         int res = rename(from.c_str(), to.c_str());
     }
 
