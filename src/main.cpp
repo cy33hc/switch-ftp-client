@@ -101,19 +101,19 @@ namespace Services
     colors[ImGuiCol_ModalWindowDimBg] = ImVec4(0.80f, 0.80f, 0.80f, 0.35f);
 
     DeckoFontType fontType = DECKO_FONT_TYPE_LATIN;
-    if (strcasecmp(language, "Simplified Chinese") == 0)
+    if (strcasecmp(language, "Simplified Chinese") == 0 || lang == 6 || lang == 15)
     {
       fontType = DECKO_FONT_TYPE_SIMPLIFIED_CHINESE;
     } 
-    else if (strcasecmp(language, "Traditional Chinese") == 0)
+    else if (strcasecmp(language, "Traditional Chinese") == 0 || lang == 11 || lang == 16)
     {
       fontType = DECKO_FONT_TYPE_TRADITIONAL_CHINESE;
     }
-    else if (strcasecmp(language, "Korean") == 0)
+    else if (strcasecmp(language, "Korean") == 0 || lang == 7)
     {
       fontType = DECKO_FONT_TYPE_KOREAN;
     }
-    else if (strcasecmp(language, "Japanese") == 0 || strcasecmp(language, "Ryukyuan") == 0)
+    else if (strcasecmp(language, "Japanese") == 0 || strcasecmp(language, "Ryukyuan") == 0 || lang == 0)
     {
       fontType = DECKO_FONT_TYPE_JAPANESE;
     }
