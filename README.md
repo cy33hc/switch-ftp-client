@@ -64,6 +64,7 @@ Romanian
 Thai
 Vietnamese
 ```
+or any other language that you have a traslation for.
 
 ## Credits
 Thx to the author of the imgui_decko3d_example which I used as a base to create this app.
