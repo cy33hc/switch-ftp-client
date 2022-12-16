@@ -20,30 +20,50 @@ L1 - Navigate to the Local list of files
 
 ## Multi Language Support
 The appplication support following languages
+
+The following languages are auto detected.
 ```
-Catalan
-Croatian
 Dutch
 English
-Euskera
 French
-Galego
 German
-Indonesian
 Italiano
 Japanese
 Korean
 Polish
 Portuguese_BR
 Russian
-Ryukyuan
 Spanish
 Simplified Chinese
 Traditional Chinese
 ```
+
+The following aren't standard languages supported by the switch, therefore requires a config file update.
+```
+Catalan
+Croatian
+Euskera
+Galego
+Indonesian
+Ryukyuan
+```
 User must modify the file **/switch/switch-ftp-client/config.ini** and update the **language** setting to with the **exact** values from the list above.
 
-Contibutions for more languages are welcome.
+**HELP:** There are no language translations for the following languages, therefore not support yet. Please help expand the list by submitting translation for the following languages. If you would like to help, please download this [Template](https://github.com/cy33hc/switch-ftp-client/blob/master/lang/English.ini), make your changes and submit an issue.
+```
+Greek
+Finnish
+Swedish
+Danish
+Norwegian
+Turkish
+Arabic
+Czech
+Hungarian
+Romanian
+Thai
+Vietnamese
+```
 
 ## Credits
 Thx to the author of the imgui_decko3d_example which I used as a base to create this app.
