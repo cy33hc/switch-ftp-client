@@ -49,7 +49,7 @@ Ryukyuan
 ```
 User must modify the file **/switch/switch-ftp-client/config.ini** and update the **language** setting to with the **exact** values from the list above.
 
-**HELP:** There are no language translations for the following languages, therefore not support yet. Please help expand the list by submitting translation for the following languages. If you would like to help, please download this [Template](https://github.com/cy33hc/switch-ftp-client/blob/master/lang/English.ini), make your changes and submit an issue.
+**HELP:** There are no language translations for the following languages, therefore not support yet. Please help expand the list by submitting translation for the following languages. If you would like to help, please download this [Template](https://github.com/cy33hc/switch-ftp-client/blob/master/lang/English.ini), make your changes and submit an issue with the file attached.
 ```
 Greek
 Finnish
