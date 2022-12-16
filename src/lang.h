@@ -1,6 +1,7 @@
 #ifndef __LANG_H__
 #define __LANG_H__
 
+#include <switch.h>
 #include "config.h"
 
 #define FOREACH_STR(FUNC)              \
@@ -83,7 +84,7 @@ extern bool needs_extended_font;
 
 namespace Lang
 {
-	void SetTranslation();
+	void SetTranslation(SetLanguage lang_code);
 }
 
 #endif

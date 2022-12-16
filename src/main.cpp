@@ -10,10 +10,17 @@
 #include "textures.h"
 #include "gui.h"
 
+static SetLanguage lang;
+
 extern "C" void userAppInit() {
   plInitialize(PlServiceType_User);
   romfsInit();
   socketInitializeDefault();
+  setInitialize();
+  u64 lang_code = -1;
+  setGetSystemLanguage(&lang_code);
+  setMakeLanguage(lang_code, &lang);
+  setExit();
 }
 
 extern "C" void userAppExit() {
@@ -127,7 +134,7 @@ namespace Services
   int Init(void)
   {
     CONFIG::LoadConfig();
-    Lang::SetTranslation();
+    Lang::SetTranslation(lang);
 
     return 0;
   }

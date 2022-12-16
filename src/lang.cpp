@@ -1,8 +1,10 @@
+#include <switch.h>
 #include "string.h"
 #include "stdio.h"
 #include "config.h"
 #include "util.h"
 #include "lang.h"
+#include "fs.h"
 
 char lang_identifiers[LANG_STRINGS_NUM][LANG_ID_SIZE] = {
 	FOREACH_STR(GET_STRING)};
@@ -76,7 +78,7 @@ bool needs_extended_font = false;
 
 namespace Lang
 {
-	void SetTranslation()
+	void SetTranslation(SetLanguage lang_code)
 	{
 		char langFile[LANG_STR_SIZE * 2];
 		char identifier[LANG_ID_SIZE], buffer[LANG_STR_SIZE];
@@ -89,7 +91,50 @@ namespace Lang
 		}
 		else
 		{
-			sprintf(langFile, "romfs:/lang/English.ini");
+			switch (lang_code)
+			{
+			case 0:
+				sprintf(langFile, "romfs:/lang/Japanese.ini");
+				break;
+			case 2:
+			case 13:
+				sprintf(langFile, "romfs:/lang/French.ini");
+				break;
+			case 3:
+				sprintf(langFile, "romfs:/lang/German.ini");
+				break;
+			case 4:
+				sprintf(langFile, "romfs:/lang/Italiano.ini");
+				break;
+			case 5:
+			case 14:
+				sprintf(langFile, "romfs:/lang/Spanish.ini");
+				break;
+			case 6:
+			case 15:
+				sprintf(langFile, "romfs:/lang/Simplified Chinese.ini");
+				break;
+			case 7:
+				sprintf(langFile, "romfs:/lang/Korean.ini");
+				break;
+			case 8:
+				sprintf(langFile, "romfs:/lang/Dutch.ini");
+				break;
+			case 9:
+			case 17:
+				sprintf(langFile, "romfs:/lang/Portuguese_BR.ini");
+				break;
+			case 10:
+				sprintf(langFile, "romfs:/lang/Russian.ini");
+				break;
+			case 11:
+			case 16:
+				sprintf(langFile, "romfs:/lang/Traditional Chinese.ini");
+				break;
+			default:
+				sprintf(langFile, "romfs:/lang/English.ini");
+				break;
+			}
 		}
 
 		FILE *config = fopen(langFile, "r");
