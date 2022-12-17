@@ -185,38 +185,23 @@ namespace GUI
 		ImGui_ImplSwitch_Init("#version 130");
 
 		// Load nintendo font
-		PlFontData standard, extended, s_chinese, t_chinese, korean;
+		PlFontData standard, extended, s_chinese, s_chinese_ext, t_chinese, korean;
 		ImWchar extended_range[] = {0xe000, 0xe152};
 		ImWchar ranges[] = {
 			// All languages with chinese included
-			0x0020, 0x00FF, // Basic Latin + Latin Supplement
-			0x0100, 0x024F, // Latin Extended
-			0x0370, 0x03FF, // Greek
-			0x0400, 0x052F, // Cyrillic + Cyrillic Supplement
-			0x0590, 0x05FF, // Hebrew
-			0x1E00, 0x1EFF, // Latin Extended Additional
-			0x1F00, 0x1FFF, // Greek Extended
-			0x2000, 0x206F, // General Punctuation
-			0x2DE0, 0x2DFF, // Cyrillic Extended-A
-			0x2E80, 0x2EFF, // CJK Radicals Supplement
-			0x3000, 0x30FF, // CJK Symbols and Punctuations, Hiragana, Katakana
-			0x31F0, 0x31FF, // Katakana Phonetic Extensions
 			0x3400, 0x4DBF, // CJK Rare
 			0x4E00, 0x9FFF, // CJK Ideograms
-			0xA640, 0xA69F, // Cyrillic Extended-B
 			0xF900, 0xFAFF, // CJK Compatibility Ideographs
-			0xFF00, 0xFFEF, // Half-width characters
 			0,
 		};
 
-		bool ok = R_SUCCEEDED(
-					  plGetSharedFontByType(&standard, PlSharedFontType_Standard)) &&
-				  R_SUCCEEDED(plGetSharedFontByType(&extended,
-													PlSharedFontType_NintendoExt));
+		bool ok = R_SUCCEEDED(plGetSharedFontByType(&standard, PlSharedFontType_Standard)) &&
+				  R_SUCCEEDED(plGetSharedFontByType(&extended, PlSharedFontType_NintendoExt));
 
 		if (fontType & FONT_TYPE_SIMPLIFIED_CHINESE)
 		{
 			ok = ok && R_SUCCEEDED(plGetSharedFontByType(&s_chinese, PlSharedFontType_ChineseSimplified));
+			ok = ok && R_SUCCEEDED(plGetSharedFontByType(&s_chinese_ext, PlSharedFontType_ExtChineseSimplified));
 		}
 
 		if (fontType & FONT_TYPE_TRADITIONAL_CHINESE)
@@ -236,18 +221,20 @@ namespace GUI
 		ImFontConfig font_cfg;
 
 		font_cfg.FontDataOwnedByAtlas = false;
-		io.Fonts->AddFontFromMemoryTTF(standard.address, standard.size, 18.0f, &font_cfg, ranges);
-		io.Fonts->AddFontFromMemoryTTF(extended.address, extended.size, 18.0f, &font_cfg, extended_range);
+		io.Fonts->AddFontFromMemoryTTF(standard.address, standard.size, 18.0f, &font_cfg, io.Fonts->GetGlyphRangesDefault());
 		font_cfg.MergeMode = true;
+		io.Fonts->AddFontFromMemoryTTF(standard.address, standard.size, 18.0f, &font_cfg, io.Fonts->GetGlyphRangesCyrillic());
+		io.Fonts->AddFontFromMemoryTTF(extended.address, extended.size, 18.0f, &font_cfg, extended_range);
 
 		if (fontType & FONT_TYPE_SIMPLIFIED_CHINESE)
 		{
-			io.Fonts->AddFontFromMemoryTTF(s_chinese.address, s_chinese.size, 18.0f, &font_cfg, io.Fonts->GetGlyphRangesChineseSimplifiedCommon());
+			io.Fonts->AddFontFromMemoryTTF(s_chinese.address, s_chinese.size, 18.0f, &font_cfg, ranges);
+			io.Fonts->AddFontFromMemoryTTF(s_chinese_ext.address, s_chinese_ext.size, 18.0f, &font_cfg, ranges);
 		}
 
 		if (fontType & FONT_TYPE_TRADITIONAL_CHINESE)
 		{
-			io.Fonts->AddFontFromMemoryTTF(t_chinese.address, t_chinese.size, 18.0f, &font_cfg, ranges);
+			io.Fonts->AddFontFromMemoryTTF(t_chinese.address, t_chinese.size, 18.0f, &font_cfg, io.Fonts->GetGlyphRangesChineseFull());
 		}
 
 		if (fontType & FONT_TYPE_KOREAN)
@@ -257,7 +244,7 @@ namespace GUI
 
 		if (fontType & FONT_TYPE_JAPANESE)
 		{
-			io.Fonts->AddFontFromMemoryTTF(standard.address, standard.size, 28.0f, &font_cfg, io.Fonts->GetGlyphRangesJapanese());
+			io.Fonts->AddFontFromMemoryTTF(standard.address, standard.size, 18.0f, &font_cfg, io.Fonts->GetGlyphRangesJapanese());
 		}
 
 		io.Fonts->Flags |= ImFontAtlasFlags_NoPowerOfTwoHeight;
