@@ -205,6 +205,27 @@ static u64 ImGui_ImplSwitch_UpdateGamepads(void)
 
     io.BackendFlags |= ImGuiBackendFlags_HasGamepad;
 
+    HidTouchScreenState state = {0};
+    hidGetTouchScreenStates(&state, 1);
+    static bool touch_down = false;
+    if (state.count < 1)
+    {
+        if (touch_down)
+        {
+        touch_down = false;
+        io.AddMouseButtonEvent(0, false);
+        }
+    }
+    else
+    {
+        float x, y;
+        x = state.touches[0].x;
+        y = state.touches[0].y;
+        io.AddMousePosEvent(x, y);
+        touch_down = true;
+        io.AddMouseButtonEvent(0, true);
+    }
+    
 // Update gamepad inputs
 #define IM_SATURATE(V) (V < 0.0f ? 0.0f : V > 1.0f ? 1.0f \
                                                    : V)
