@@ -9,6 +9,15 @@ if(NOT CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE Debug CACHE STRING "" FORCE)
 endif()
 
+add_definitions(
+  -DIMGUI_IMPL_OPENGL_LOADER_GLAD
+  -DIMGUI_DISABLE_OBSOLETE_FUNCTIONS
+  -DIMGUI_DISABLE_DEMO_WINDOWS
+  -DIMGUI_DISABLE_DEBUG_TOOLS
+  -DIMGUI_DISABLE_WIN32_DEFAULT_CLIPBOARD_FUNCTIONS
+  -DIMGUI_DISABLE_WIN32_DEFAULT_IME_FUNCTIONS
+  -DIMGUI_DISABLE_WIN32_FUNCTIONS
+)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fpermissive")
 
 set(TARGET ${PROJECT_NAME})
@@ -20,17 +29,17 @@ add_executable(${TARGET}
   src/lang.cpp
   src/fs.cpp
   src/ftpclient.cpp
-  src/textures.cpp
   src/actions.cpp
   src/gui.cpp
   src/windows.cpp
   src/config.cpp
   src/ime_dialog.cpp
-  src/imgui_impl_deko3d.cpp
+  src/imgui_impl_switch.cpp
   ${IMGUI_DIR}/imgui.cpp
   ${IMGUI_DIR}/imgui_draw.cpp
   ${IMGUI_DIR}/imgui_tables.cpp
   ${IMGUI_DIR}/imgui_widgets.cpp
+  ${IMGUI_DIR}/misc/freetype/imgui_freetype.cpp
   )
   
 target_compile_features(${TARGET} PUBLIC cxx_std_17)
@@ -38,19 +47,33 @@ target_compile_definitions(${TARGET} PUBLIC
   IMGUI_DISABLE_OBSOLETE_KEYIO
   IMGUI_DISABLE_OBSOLETE_FUNCTIONS
   IMGUI_IMPL_OPENGL_LOADER_GLAD
+  IMGUI_DISABLE_DEMO_WINDOWS
+  IMGUI_DISABLE_DEBUG_TOOLS
+  IMGUI_DISABLE_WIN32_DEFAULT_CLIPBOARD_FUNCTIONS
+  IMGUI_DISABLE_WIN32_DEFAULT_IME_FUNCTIONS
+  IMGUI_DISABLE_WIN32_FUNCTIONS
+  IMGUI_DISABLE_STB_TRUETYPE_IMPLEMENTATION
+  IMGUI_ENABLE_FREETYPE
   )
 
 target_link_libraries(${TARGET} PUBLIC
-  deko3dd
-  deko3d
+  glad
+  EGL
+  glapi
+  drm_nouveau
+  usbhsfs
+  ntfs-3g
+  lwext4
+  freetype
+  bz2
   png
   m
   z
-  glad
 )
 
 target_include_directories(${TARGET} PUBLIC
   ${DEVKITPRO}/portlibs/switch/include
+  ${DEVKITPRO}/portlibs/switch/include/freetype2
   ${IMGUI_DIR})
 
 file(COPY icons DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/romfs)

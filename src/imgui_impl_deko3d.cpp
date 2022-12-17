@@ -174,7 +174,7 @@ static void InitDeko3dSwapchain(ImGui_ImplDeko3d_Data *bd)
   }
 }
 
-static void ImGui_LoadSwitchFonts(ImGuiIO &io, ImGui_ImplDeko3d_Data *bd)
+static void ImGui_LoadSwitchFonts(ImGuiIO &io, FontType fontType)
 {
   PlFontData standard, extended, s_chinese, t_chinese, korean;
   ImWchar extended_range[] = {0xe000, 0xe152};
