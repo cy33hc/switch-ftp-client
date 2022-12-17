@@ -5,7 +5,6 @@
 #include <switch.h>
 #include "windows.h"
 #include "gui.h"
-#include "ftpclient.h"
 
 bool done = false;
 int gui_mode = GUI_MODE_BROWSER;

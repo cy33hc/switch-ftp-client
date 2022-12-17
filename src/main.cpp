@@ -1,7 +1,6 @@
 #include <cstdlib>
 
 #include <switch.h>
-#include <usbhsfs.h>
 
 #include "util.h"
 #include "config.h"

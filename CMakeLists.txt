@@ -61,9 +61,6 @@ target_link_libraries(${TARGET} PUBLIC
   EGL
   glapi
   drm_nouveau
-  usbhsfs
-  ntfs-3g
-  lwext4
   freetype
   bz2
   png
@@ -78,12 +75,7 @@ target_include_directories(${TARGET} PUBLIC
 
 file(COPY icons DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/romfs)
 file(COPY lang DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/romfs)
-nx_add_shader_program(imgui_vsh src/imgui_vsh.glsl vert)
-nx_add_shader_program(imgui_fsh src/imgui_fsh.glsl frag)
 dkp_add_asset_target(${TARGET}_romfs ${CMAKE_CURRENT_BINARY_DIR}/romfs)
-dkp_install_assets(${TARGET}_romfs
-  DESTINATION shaders
-  TARGETS imgui_vsh imgui_fsh)
 
 nx_generate_nacp(${TARGET}.nacp
   NAME ${TITLE_NAME}
