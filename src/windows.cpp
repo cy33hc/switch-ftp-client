@@ -2,9 +2,7 @@
 #include <stdio.h>
 #include <algorithm>
 #include <set>
-#include "imgui_impl_deko3d.h"
 #include "windows.h"
-#include "textures.h"
 #include "fs.h"
 #include "config.h"
 #include "gui.h"
@@ -429,7 +427,7 @@ namespace Windows
             }
             if (ImGui::IsItemHovered())
             {
-                if (ImGui::CalcTextSize(item.name).x > 310)
+                if (ImGui::CalcTextSize(item.name).x > 450)
                 {
                     ImGui::BeginTooltip();
                     ImGui::Text(item.name);
@@ -567,7 +565,7 @@ namespace Windows
             }
             if (ImGui::IsItemHovered())
             {
-                if (ImGui::CalcTextSize(item.name).x > 310)
+                if (ImGui::CalcTextSize(item.name).x > 450)
                 {
                     ImGui::BeginTooltip();
                     ImGui::Text(item.name);
