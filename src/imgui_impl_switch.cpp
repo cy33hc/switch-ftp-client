@@ -36,6 +36,12 @@
 #define IMGUI_IMPL_OPENGL_MAY_HAVE_EXTENSIONS
 #endif
 
+#define ANALOG_THRESHOLD 192
+#define BUTTON_LEFT 0x00000010
+#define BUTTON_RIGHT 0x00000020
+#define BUTTON_UP 0x00000040
+#define BUTTON_DOWN 0x00000080
+
 // OpenGL Data
 struct ImGui_ImplSwitch_Data
 {
@@ -59,6 +65,11 @@ struct ImGui_ImplSwitch_Data
 
     ImGui_ImplSwitch_Data() { std::memset((void *)this, 0, sizeof(*this)); }
 };
+
+static uint32_t previous_down = 0;
+static int repeat_count = 0;
+static int repeat_delay = 50000000;
+static uint64_t previous_time = 0;
 
 // Backend data stored in io.BackendRendererUserData to allow support for multiple Dear ImGui contexts
 // It is STRONGLY preferred that you use docking branch with multi-viewports (== single Dear ImGui context + multiple windows) instead of multiple Dear ImGui contexts.
@@ -194,6 +205,7 @@ static u64 ImGui_ImplSwitch_UpdateGamepads(void)
 {
     ImGui_ImplSwitch_Data *bd = ImGui_ImplSwitch_GetBackendData();
     ImGuiIO &io = ImGui::GetIO();
+    u64 current_time = armTicksToNs(armGetSystemTick());
     if ((io.ConfigFlags & ImGuiConfigFlags_NavEnableGamepad) == 0)
         return -1;
 
@@ -201,7 +213,7 @@ static u64 ImGui_ImplSwitch_UpdateGamepads(void)
     io.BackendFlags &= ~ImGuiBackendFlags_HasGamepad;
 
     padUpdate(&bd->pad);
-    HidAnalogStickState r_stick = padGetStickPos(&bd->pad, 1);
+    HidAnalogStickState l_stick = padGetStickPos(&bd->pad, 0);
 
     io.BackendFlags |= ImGuiBackendFlags_HasGamepad;
 
@@ -225,7 +237,47 @@ static u64 ImGui_ImplSwitch_UpdateGamepads(void)
         touch_down = true;
         io.AddMouseButtonEvent(0, true);
     }
-    
+
+    // Simulate analog left stick as d-pad
+    uint32_t down = 0;
+    if (l_stick.x < -ANALOG_THRESHOLD)
+        down |= BUTTON_LEFT;
+    else if (l_stick.x > ANALOG_THRESHOLD)
+        down |= BUTTON_RIGHT;
+    else if (l_stick.y > ANALOG_THRESHOLD)
+        down |= BUTTON_UP;
+    else if (l_stick.y < -ANALOG_THRESHOLD)
+        down |= BUTTON_DOWN;
+
+    uint32_t pressed = down & ~previous_down;
+    if (previous_down == down)
+    {
+        uint64_t delay = 300000000;
+        if (repeat_count > 0)
+            delay = repeat_delay;
+        if (current_time - previous_time > delay)
+        {
+            pressed = down;
+            previous_time = current_time;
+            repeat_count++;
+        }
+    }
+    else
+    {
+        previous_time = current_time;
+        repeat_count = 0;
+    }
+
+    if (pressed & BUTTON_LEFT)
+        io.AddKeyEvent(ImGuiKey_GamepadDpadLeft, true);
+    if (pressed & BUTTON_RIGHT)
+        io.AddKeyEvent(ImGuiKey_GamepadDpadRight, true);
+    if (pressed & BUTTON_UP)
+        io.AddKeyEvent(ImGuiKey_GamepadDpadUp, true);
+    if (pressed & BUTTON_DOWN)
+        io.AddKeyEvent(ImGuiKey_GamepadDpadDown, true);
+    previous_down = down;
+
 // Update gamepad inputs
 #define IM_SATURATE(V) (V < 0.0f ? 0.0f : V > 1.0f ? 1.0f \
                                                    : V)
@@ -251,10 +303,10 @@ static u64 ImGui_ImplSwitch_UpdateGamepads(void)
     MAP_BUTTON(ImGuiKey_GamepadDpadDown, HidNpadButton_Down);
     MAP_BUTTON(ImGuiKey_GamepadL1, HidNpadButton_L);
     MAP_BUTTON(ImGuiKey_GamepadR1, HidNpadButton_R);
-    MAP_BUTTON(ImGuiKey_GamepadLStickLeft, HidNpadButton_StickLLeft);
-    MAP_BUTTON(ImGuiKey_GamepadLStickRight, HidNpadButton_StickLRight);
-    MAP_BUTTON(ImGuiKey_GamepadLStickUp, HidNpadButton_StickLUp);
-    MAP_BUTTON(ImGuiKey_GamepadLStickDown, HidNpadButton_StickLDown);
+    MAP_BUTTON(ImGuiKey_GamepadLStickLeft, HidNpadButton_StickRLeft);
+    MAP_BUTTON(ImGuiKey_GamepadLStickRight, HidNpadButton_StickRRight);
+    MAP_BUTTON(ImGuiKey_GamepadLStickUp, HidNpadButton_StickRUp);
+    MAP_BUTTON(ImGuiKey_GamepadLStickDown, HidNpadButton_StickRDown);
 #undef MAP_BUTTON
 #undef MAP_ANALOG
 
