@@ -1,3 +1,5 @@
+# This repo is archived, please refer to the superceded version. https://github.com/cy33hc/switch-ezremote-client
+
 # switch-ftp-client
 
 Simple FTP client for the switch
